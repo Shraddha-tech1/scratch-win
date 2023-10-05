@@ -1,0 +1,260 @@
+<html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width" />
+      <link href=
+      'https://fonts.googleapis.com/css?family=Open+Sans:400,300,
+      300italic,400italic,600,600italic,700italic,700'
+      rel='stylesheet' type='text/css'>
+      <title>HTML Gamification Tempalates - Scratch Card</title>
+      <script src="https://app-cdn.moengage.com/inbound-ui/html-template/assets/lib/jquery-1.12.4.min.js" type="text/javascript"></script>
+      <script type="text/javascript" src="https://app-cdn.moengage.com/inbound-ui/html-template/assets/lib/scratchpad.min.js" ></script>
+      <link rel="stylesheet" href="https://cdn.moengage.com/inapp/html-template6/assets/css/style.css">
+      <!-- In case you want to change background image, Just uncomment the below code and add your own Background image -->
+      <!-- <style>
+          .main::before {
+              background-image: url(YOUR-IMAGE-PATH);
+          }
+      </style> -->
+      <style type="text/css">
+        html
+        {
+          box-sizing: border-box;
+        }
+        *, *:before, *:after {
+          box-sizing: inherit;
+        }
+        .scratchpad{
+          width: 180px;
+          height: 180px;
+          margin: 0 auto;
+          background: #FFFFFF;
+          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+          border-radius: 10px;
+        }
+        body {
+            background  :#efefef;
+        }
+
+        .btn{
+          background:#56CFD2;
+          color :#FFF;
+          padding :10px 25px;
+          display :inline-block;
+          margin-top :15px;
+          text-decoration :none;
+          font-weight :600;
+          text-transform:uppercase;
+          border-radius :3px;
+          -moz-border-radius :3px;
+          -webkit-border-radiuss :3px;
+        }
+        .main::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+            background-size: cover;
+    background-image: url(bg.png);
+}
+        button{color:#fff;background:none;border-bottom:1px solid #FFF; font-size:16px;padding:0px;border-radius:0;height:auto;width:auto;text-transform:capitalize;font-weight:500;}
+          .card-container + p, .greeting-img div > p {
+    font-size: 15px;
+    color: #fff;
+}
+.greeting-text p {
+    color: #fff;
+    padding-top: 22px;
+    font-size: 19px;
+}
+        .screen-1 h2 {
+    color: #fff;
+    font-size: 34px;
+}
+          .screen-1 h4 {
+    color: #fff;
+    font-size: 16px;
+}
+  
+          .scratchpad {
+    width: 235px;
+    height: 235px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+          
+  </style>
+ 
+</head>
+<body>
+<dialog open class="main">
+  <img id="close-button" src="cross.png" alt="close" srcset="" onclick="moengage.trackDismiss(); moengage.dismissMessage();">
+  <div class="screen-1">
+      <h2>Scratch And Win</h2>
+      <h4>Exciting Prized Await You!</h4>
+      <div class="card-container">
+        <div id="card" class="scratchpad"></div>
+      </div>
+  </div>
+  
+  <div class="winning-screen">
+      <div class="greeting-text">
+        <img src="closed-box.png" alt="win" srcset="">
+        <p>Congratulations, you won <span></span></p>
+      </div>
+      <div class="greeting-img">
+        <div class="card-container" id="target">
+          <div class="scratchpad">
+            <code>
+              <p class="text">YOUR_CODE</p>
+              <img src="https://cdn.moengage.com/inapp/html-template6/assets/img/copy-code-icon.svg" alt="copy-code-icon" srcset="" onclick="copyCode(); moengage.trackEvent('MOE_RESPONSE_SUBMITTED',{coupon_code: document.querySelector('code').innerText},{},{},false,true); moengage.setUserAttribute('coupon_code', document.querySelector('code').innerText)"><span></span>
+            </code>
+          </div>
+        </div>
+        <div>
+          <p class="text-white">Copy this code and use during checkout.</p>
+          <button onclick="moengage.openRichLanding('https://www.moengage.com'); moengage.trackClick(1); moengage.dismissMessage();">Continue shopping</button>
+        </div>
+      </div>
+  </div>
+  
+  <div class="loosing-screen">
+      <div class="greeting-text">
+        <img src="open-box.png" alt="loose-icon" srcset="">
+        <p>Sorry, You didn't win anything</p>
+      </div>
+      <div class="greeting-img">
+        <div class="card-container">
+          <div class="scratchpad">
+            <p>Better luck next time</p>
+          </div>
+        </div>
+        <button onclick="moengage.openRichLanding('https://www.moengage.com'); moengage.trackClick(1); moengage.dismissMessage()">Continue shopping</button>
+      </div>
+  </div>
+  <img id="background-image" style="display: none;" src="Card.png" alt="background-image" srcset="">
+</dialog>
+ 
+
+<script src="https://cdn.moengage.com/inapp/html-template6/assets/js/script.js"></script>
+<script type="text/javascript">
+
+// If you are using absolute path from your cdn or internet, then replace `scratchCardImagePath` with absolute URL. Ex - https://www.google.com/image/xyz.png
+function getBaseUrl () {
+  const baseTag = document.getElementsByTagName("BASE")[0] || null;
+  const baseHiddenTag = document.getElementsByTagName("base-hidden")[0] || null;
+  const baseUrl = baseHiddenTag ? baseHiddenTag?.getAttribute("href") : baseTag?.getAttribute("href");
+  return baseUrl || '';
+}
+
+function getUploadedAssetPath (path) {
+  let assetPath = `${getBaseUrl()}${path}`;
+  return assetPath;
+}
+
+function getUploadedScratchCardImage (path) {
+  document.getElementById('background-image').setAttribute('src', path);
+  let assetPath = `${getBaseUrl()}${path}`;
+  return assetPath;
+}
+
+var promoCode = '';
+
+
+// Javascript based assets ****************************************************
+// To change `bg1` or `bg2` image, upload image via file upload & change below line to -
+// var bg1 =  getUploadedAssetPath("your uploaded image path");
+// var bg2 =  getUploadedAssetPath("your uploaded image path");
+var bg1 = "https://cdn.moengage.com/inapp/html-template6/assets/img/dummy-1.png";
+var bg2 = "https://cdn.moengage.com/inapp/html-template6/assets/img/dummy-2.png";
+var bgArray= [ bg1, bg2 ],
+selectBG = bgArray[Math.floor(Math.random() * bgArray.length)];
+
+var backgroundImage = '';
+
+// For uploading via file uploader, change below line to - 
+// var scratchCardImagePath = getUploadedScratchCardImage("your uploaded image path");
+var scratchCardImagePath = "Card.png";
+
+function callScratchPad() {
+  $('#card').wScratchPad({
+    // SIZE OF THE ERASER
+    size: 40,    
+    bg: selectBG,
+    realtime: true, 
+    // ADD YOUR OVERLAY IMAGE
+    fg: scratchCardImagePath,
+    
+    scratchMove: function (e, percent) {
+        // Show the plain-text promo code and call-to-action when the 
+        /* scratch area is 80% scratched */
+        if ((percent > 20) && (result.win !== "no")) {
+          document.querySelector(".screen-1").classList.add("hide");
+          document.querySelector(".winning-screen").classList.add("show");
+        } else if ((percent > 30) && (result.win === "no")) {
+          document.querySelector(".screen-1").classList.add("hide");
+          document.querySelector(".loosing-screen").classList.add("show");
+        }
+      }
+  });
+
+}
+
+
+
+  // Your DATA goes here for the this template to run
+  var DATA = [
+    {
+      id: 1,
+      code: 'Use DWM100OFF to get ₹100* Off',
+      wieghtage: 30,
+      win: "yes"
+    },
+    {
+      id: 2,
+      code: 'Use DWM350OFF to get ₹350* Off ',
+      wieghtage: 20,
+      win: "yes"
+    },
+    {
+      id: 3,
+      code: 'Sorry, Come Back Tomorrow',
+      wieghtage: 50,
+      win: "no"
+    }
+  ]
+  
+var result = weightedRandom(DATA);
+// Wieghtage on which you dont want to show winning screen goes to if condition i.e. in our case 40.
+if (result.win === "no") {
+  document.querySelector(".card-container .scratchpad").insertAdjacentHTML("beforeend", `<p>Better luck next time!</p>`)
+    promoCode = '';
+} else {
+    document.querySelector(".card-container .scratchpad").insertAdjacentHTML("beforeend", `<code><p>${result.code}</p><img src='https://cdn.moengage.com/inapp/html-template6/assets/img/copy-code-icon.svg' alt='copy-code-icon' srcset=''><span id='code'>✓</span></code>`);
+    document.querySelector(".winning-screen code p").textContent = result.code;
+    promoCode = result.code;
+    var promoCode = '';
+}
+
+callScratchPad();
+document.querySelector(".card-container .scratchpad > img").remove();
+</script>
+
+<script>
+  let copyText = document.querySelector(".text");
+copyText.querySelector("button").addEventListener("click", function () {
+	let input = copyText.querySelector("input.text");
+	input.select();
+	document.execCommand("copy");
+	copyText.classList.add("active");
+	window.getSelection().removeAllRanges();
+	setTimeout(function () {
+		copyText.classList.remove("active");
+	}, 2500);
+});
+
+</script>
+</body>
+</html>
